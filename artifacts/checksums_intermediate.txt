@@ -1,0 +1,1 @@
+add900e140b839f6b6bb24ffdf03536f235350fc7440e0d93f005f4343ecb49e  target/wasm32-unknown-unknown/release/nft_escrow_classic.wasm
