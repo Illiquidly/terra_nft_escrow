@@ -1,1 +1,2 @@
-add900e140b839f6b6bb24ffdf03536f235350fc7440e0d93f005f4343ecb49e  target/wasm32-unknown-unknown/release/nft_escrow_classic.wasm
+593e7c4d992c539b59926389382716556a4f1974b31f31fc91a652fc91ac01bc  target/wasm32-unknown-unknown/release/minter.wasm
+c95a927a6c0425650a7b6ba86d32e4c8dc2ea38c533c1e63d87ad25600b9ebbe  target/wasm32-unknown-unknown/release/nft_escrow_classic.wasm

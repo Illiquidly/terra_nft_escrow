@@ -1,7 +1,7 @@
+use crate::state::TokenOwner;
 use cosmwasm_std::{Binary, StdError, StdResult, Timestamp};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use crate::state::TokenOwner;
 
 #[derive(Serialize, Deserialize, JsonSchema, Debug, Clone, PartialEq)]
 pub struct MigrateMsg {}
@@ -21,8 +21,8 @@ pub fn is_valid_name(name: &str) -> bool {
     true
 }
 
-pub fn to_token_info(token_id: String, token_owner: TokenOwner) -> TokenInfo{
-    TokenInfo{
+pub fn to_token_info(token_id: String, token_owner: TokenOwner) -> TokenInfo {
+    TokenInfo {
         token_id,
         depositor: token_owner.owner.to_string(),
         migrated: token_owner.migrated,
@@ -32,12 +32,12 @@ pub fn to_token_info(token_id: String, token_owner: TokenOwner) -> TokenInfo{
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
-pub struct TokenInfo{
+pub struct TokenInfo {
     pub token_id: String,
     pub depositor: String,
     pub migrated: bool,
     pub deposit_time: Timestamp,
-    pub migrate_time: Timestamp
+    pub migrate_time: Timestamp,
 }
 
 impl InstantiateMsg {

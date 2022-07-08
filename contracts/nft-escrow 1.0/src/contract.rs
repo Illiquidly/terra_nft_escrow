@@ -2,15 +2,15 @@
 use anyhow::{anyhow, Result};
 use cosmwasm_std::{
     entry_point, from_binary, to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Order, Response,
-    StdError, StdResult, Timestamp
+    StdError, StdResult, Timestamp,
 };
 use cw_storage_plus::Bound;
 
 use escrow_export_classic::msg::{
-    ContractInfoResponse, ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, ReceiveMsg,
-    TokenInfoResponse,TokenInfo, to_token_info
+    to_token_info, ContractInfoResponse, ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg,
+    ReceiveMsg, TokenInfo, TokenInfoResponse,
 };
-use escrow_export_classic::state::{ContractInfo,  TokenOwner};
+use escrow_export_classic::state::{ContractInfo, TokenOwner};
 
 use crate::error::ContractError;
 use crate::state::{is_owner, DepositNft, CONTRACT_INFO};
@@ -34,7 +34,9 @@ pub fn instantiate(
             .unwrap_or(Ok(info.sender))?,
     };
     CONTRACT_INFO.save(deps.storage, &data)?;
-    Ok(Response::default().add_attribute("one_sided_escrow_contract", "init"))
+    Ok(Response::default()
+        .add_attribute("action", "init")
+        .add_attribute("contract_name", "one_sided_escrow_contract"))
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -113,8 +115,10 @@ pub fn user_tokens(
         .iter()
         .map(|v| {
             v.as_ref().map(|v| {
-
-                Ok(to_token_info(String::from_utf8(v.0.to_vec()).unwrap(), v.1.clone()))
+                Ok(to_token_info(
+                    String::from_utf8(v.0.to_vec()).unwrap(),
+                    v.1.clone(),
+                ))
             })
         })
         .collect();
@@ -135,7 +139,9 @@ pub fn registered_tokens(
         .range(deps.storage, start, None, Order::Ascending)
         .take(limit)
         .map(|item| {
-            item.map(|(token_id, token_owner)| to_token_info(String::from_utf8(token_id.to_vec()).unwrap(),token_owner))
+            item.map(|(token_id, token_owner)| {
+                to_token_info(String::from_utf8(token_id.to_vec()).unwrap(), token_owner)
+            })
         })
         .collect();
 
@@ -305,10 +311,7 @@ pub mod tests {
             .nfts
             .load(&deps.storage, "id")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
         assert!(!deposit.migrated);
     }
 
@@ -330,42 +333,27 @@ pub mod tests {
             .nfts
             .load(&deps.storage, "id")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
         let deposit = DepositNft::default()
             .nfts
             .load(&deps.storage, "id1")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
         let deposit = DepositNft::default()
             .nfts
             .load(&deps.storage, "id2")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
         let deposit = DepositNft::default()
             .nfts
             .load(&deps.storage, "id3")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
         let deposit = DepositNft::default()
             .nfts
             .load(&deps.storage, "id4")
             .unwrap();
-        assert_eq!(
-            deposit.owner,
-            addr
-        );
+        assert_eq!(deposit.owner, addr);
     }
 
     #[test]

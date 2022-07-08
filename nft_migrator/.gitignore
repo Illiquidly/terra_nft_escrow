@@ -1,0 +1,5 @@
+dist/*
+ipfs/*
+ipfs_client/*
+orbitdb/*
+node_modules/*

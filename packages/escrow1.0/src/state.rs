@@ -16,7 +16,7 @@ pub struct TokenOwner {
     pub owner: Addr,
     pub migrated: bool,
     pub deposit_time: Timestamp,
-    pub migrate_time: Timestamp
+    pub migrate_time: Timestamp,
 }
 
 pub struct TokenIndexes<'a> {
