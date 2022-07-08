@@ -85,7 +85,8 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
 
   let mintExecuteMsg = {
     mint_request: mintRequest,
-    signature
+    signature,
+    minter: contractInfo.minter
   }
   return mintExecuteMsg;
 }
