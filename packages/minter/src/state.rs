@@ -1,6 +1,8 @@
-use cosmwasm_std::{Addr, Uint128};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use cosmwasm_std::{Addr, Uint128, Deps};
+use cw_storage_plus::{Item};
+use crate::error::ContractError;
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
 #[serde(rename_all = "snake_case")]
@@ -13,4 +15,14 @@ pub struct ContractInfo {
     pub treasury: Addr,
     pub project_price: Uint128,
     pub project_treasury: Addr,
+}
+
+pub const CONTRACT_INFO: Item<ContractInfo> = Item::new("contract_info");
+
+pub fn is_owner(deps: Deps, addr: Addr) -> Result<(), ContractError> {
+    if CONTRACT_INFO.load(deps.storage)?.owner == addr {
+        Ok(())
+    } else {
+        Err(ContractError::Unauthorized {})
+    }
 }

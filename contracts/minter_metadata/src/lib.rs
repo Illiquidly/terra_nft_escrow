@@ -1,6 +1,8 @@
 #[cfg(not(feature = "library"))]
 use anyhow::{Result};
-use cosmwasm_std::{entry_point, Binary, Deps, DepsMut,Env,MessageInfo, Response, Empty};
+use cosmwasm_std::{entry_point, Binary, Deps, DepsMut,Env,MessageInfo, Response};
+
+use cw721_metadata_onchain::Metadata;
 
 use minter_export::contract::{
     instantiate as minter_instantiate,
@@ -10,7 +12,7 @@ use minter_export::contract::{
 use minter_export::msg::{InstantiateMsg, ExecuteMsg, QueryMsg};
 
 // This is a simple type to let us handle empty extensions
-pub type Extension = Option<Empty>;
+pub type Extension = Option<Metadata>;
 
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn instantiate(
@@ -42,6 +44,7 @@ pub fn query(
 ) -> Result<Binary> {
     minter_query(deps, env, msg)
 }
+
 
 #[cfg(test)]
 pub mod tests {
@@ -180,7 +183,6 @@ pub mod tests {
         )
         .unwrap();
             
-
         let mint_msg: MintMsg<Extension> =  MintMsg{
             token_id: "test".to_string(),
             owner: "terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8".to_string(),

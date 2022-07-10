@@ -1,12 +1,11 @@
 [package]
-name = "minter-export"
-version = "0.1.0"
+name = "minter-metadata"
+version = "0.9.0"
 authors = ["Nicolas KOWALSKI <kowalski.kowalskin@gmail.com>"]
 edition = "2018"
-description = "Messages for the minter contract (migrator)"
 
 [lib]
-bench = false
+crate-type = ["cdylib", "rlib"]
 
 [features]
 backtraces = ["cosmwasm-std/backtraces"]
@@ -14,24 +13,25 @@ backtraces = ["cosmwasm-std/backtraces"]
 library = []
 
 [dependencies]
-# CosmWasm
+#CosmWasm
+cw721-metadata-onchain = "0.11.0"
 cw721-base = "0.13.0"
 cw-storage-plus = "0.13.0"
 cw20-base = { version = "0.13.0", features = ["library"] }
 cosmwasm-std = { version = "1.0.0" }
+terra-cosmwasm = { version = "2.2" }
 
 #Other Modules
 schemars = "0.8.1"
 serde = { version = "1.0.103", default-features = false, features = ["derive"] }
 thiserror = { version = "1.0.23" }
-strum = "0.24"
-strum_macros = "0.24"
 anyhow = "1.0"
 sha2 = { version = "0.9.5", default-features = false }
 base64 = { version="0.13.0" }
 
-#Local Modules
+# Local Modules
+minter-export = { path = "../../packages/minter", version = "0.1.0" }
 
 [dev-dependencies]
-cosmwasm-schema = { version = "0.16.0" }
+cosmwasm-schema = { version = "1.0.0" }
 

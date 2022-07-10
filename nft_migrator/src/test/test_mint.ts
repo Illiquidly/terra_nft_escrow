@@ -44,7 +44,7 @@ async function main() {
   // Uploading the contract code
   
   let minter_contract = handler.getContract(env.contracts.minter);
-
+  console.log(env)
   let nfts = env["cw721"];
   let nfts_names = Object.keys(nfts);
 
@@ -64,14 +64,15 @@ async function main() {
   }
   let signature = await signRedeemRequest(mintRequest, minter);
 
-
+  /*
   let mintExecuteMsg = {
     mint_request: mintRequest,
     signature
   }
   let response = await minter_contract.execute.mint(mintExecuteMsg, '443uluna')
-  //let testMintMsg = {"mint_request":{"mint_msg":{"token_id":"test","owner":"terra1kj6vwwvsw7vy7x35mazqfxyln2gk5xy00r87qy","token_uri":"test","extension":null},"nft_contract":"terra1lwkwa4k6fskmtle9a5camewnv4eglrxsjs30et2d5k25kt75fujsg9curs"},"signature":"ELDnEt3Rpiiavyfyb/cZc/LdLf4DGWyjHsUAPeQL0L1pxG6dxAOUH3N5ta4FduUXLgpW6GQWCzrKlNCyJnE7ng=="}
-  //let response = await minter_contract.execute.mint(testMintMsg, '443uluna')
+  */
+  let testMintMsg = {"mint_request":{"mint_msg":{"token_id":"176847848414454825788377623285924436244","owner":"terra14j9q7ffhmdgl4sgl8ej95z442500hcg058t4qr","token_uri":"ipfs://QmVnDsCXBZcGBJcskWFB5sqe54z1QyuEenjsQGBCaghL51","extension":{"image":"ipfs://QmeMQ8PHUWbDFkhq8zfKEvqiJHor21xC96JTaYMU9gnxa5","image_data":null,"external_url":null,"description":"Terra Meta Royals: Golden Tickets. 1 of 777.","name":"Golden Ticket #487","attributes":[{"display_type":null,"trait_type":"Background","value":"Black Fabric"},{"display_type":null,"trait_type":"Ticket","value":"Golden Ticket"}],"background_color":null,"animation_url":null,"youtube_url":null}},"nft_contract":"terra1hry9n78zhne5h7hjsu4nt33yz9znm89fsar2reflt8mnlq30auvq6v8uuf"},"signature":"JQ7h5skv1NZtRROc8MuEfk2rbxHPQVaotrq0iCYgR0Y3RnoFaqVoge3Q4FymtZ+NjK8bFoc/Ab2ylpvQl95IOQ=="}
+  let response = await minter_contract.execute.mint(testMintMsg)
   console.log(response);
 }
 

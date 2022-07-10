@@ -2,7 +2,8 @@
     "staging":{
         "nft":1910,
         "nft_metadata":1919,
-        "minter":1909,
+        "minter":1909,  
+        "minter_metadata":1922,
     },
     "production":{
         "nft":0,

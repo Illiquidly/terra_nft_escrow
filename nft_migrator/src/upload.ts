@@ -24,6 +24,8 @@ async function main() {
     codeName = '../artifacts/nft_escrow_classic.wasm';   
   }else if(contract == "minter"){
     codeName = '../artifacts/minter.wasm';   
+  }else if(contract == "minter_metadata"){
+    codeName = '../artifacts/minter_metadata.wasm';   
   }else if(contract == "nft"){
     if(env.type == "classic"){
       codeName = '../artifacts/cw721_base0.16.wasm';
