@@ -123,7 +123,7 @@ export class Address {
 
   constructor(mnemonic: string = '', network: string| undefined = undefined) {
     if(network){
-
+      this.env = globalEnv[network]
     }else{
       this.env = env;
     }

@@ -9,7 +9,7 @@ use sha2::{Digest, Sha256};
 
 use anyhow::{anyhow, Result};
 use minter_export::error::ContractError;
-use minter_export::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, MintRequest };
+use minter_export::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, MintRequest, FeeResponse};
 use minter_export::state::{ContractInfo};
 
 use cw721_base::{ExecuteMsg as Cw721ExecuteMsg, MintMsg};
@@ -89,6 +89,14 @@ pub fn execute(
             info,
             price
         ),
+        ExecuteMsg::SetProjectFeePrice {
+            price
+        } => set_project_price(
+            deps,
+            env,
+            info,
+            price
+        ),
         ExecuteMsg::SetNftContract {
             nft_contract
         } => set_nft_contract(
@@ -101,8 +109,18 @@ pub fn execute(
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn query(_deps: Deps, _env: Env, _msg: QueryMsg) -> Result<Binary> {
-    Err(anyhow!(ContractError::Unauthorized{}))
+pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> Result<Binary> {
+    match msg {
+        QueryMsg::FeePrice {} => {
+            let contract_info = CONTRACT_INFO.load(deps.storage)?;
+            let fee_response = FeeResponse{
+                fee_price: contract_info.fee_price,
+                project_price: contract_info.project_price
+            };
+
+            to_binary(&fee_response).map_err(|x| anyhow!(x))
+        },
+    }
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -480,11 +498,11 @@ pub mod tests {
         let info = mock_info("creator", &coins(456,"uluna"));
         execute(
             deps.as_mut(),
-            env.clone(),
+            env,
             info,
             ExecuteMsg::Mint{
                  mint_request:MintRequest{
-                    mint_msg: mint_msg.clone(), 
+                    mint_msg,
                     nft_contract
                 },
                 signature: signature.to_string()

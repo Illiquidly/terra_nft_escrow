@@ -60,6 +60,8 @@ export async function signRedeemRequest(
   return signed.toString('base64');
 }
 
+let terra_classic = new LCDClient(globalEnv["classic"]['chain']);
+
 async function getTokenMintMessage(contractInfo: any, userAddress: string, tokenId: string): Promise<any>{
   // We try to send the token.
   let nftAddress2 = contractInfo.contract2;
@@ -67,14 +69,22 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
   let minterMnemonic = mnemonics[nftAddress1].mnemonic;
   let minter = new Address(minterMnemonic).wallet;
 
-  let nftMetadata = require(`../nft_info/${contractInfo.contract1}.json`)
-  let tokenInfo = nftMetadata[tokenId];
+  
+  let tokenMetadata: any = await terra_classic.wasm.contractQuery(
+    contractInfo.contract1,
+    {
+      nft_info:{
+        token_id: tokenId
+      }
+    }
+  )
+  console.log(tokenMetadata)
 
   let mintMsg: MintMsg = {
-    token_id: "test",
+    token_id: tokenId,
     owner: userAddress,
-    token_uri: tokenInfo.tokenUri,
-    extension: tokenInfo.extension
+    token_uri: tokenMetadata.token_uri ?? null,
+    extension: tokenMetadata.extension ?? null
   }
   let mintRequest: MintRequest = {
     mint_msg: mintMsg,
@@ -116,8 +126,7 @@ async function main() {
       }
 
       // We query the Terra 1.0 chain to make sure the designated NFT has been deposited by the address in the escrow contract
-      let terra = new LCDClient(globalEnv["classic"]['chain']);
-      await terra.wasm.contractQuery(
+      await terra_classic.wasm.contractQuery(
         contractInfo.escrow_contract,
         {
           depositor:{

@@ -1,0 +1,13 @@
+{
+    "staging":{
+        "nft":1910,
+        "minter":1909,
+    },
+    "production":{
+        "nft":0,
+        "minter":0,
+    },
+    "classic":{
+        "escrow":5855
+    }
+}

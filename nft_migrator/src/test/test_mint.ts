@@ -1,5 +1,5 @@
 import { Address } from './terra_utils';
-import { env, add_contract } from './env_helper';
+import { env } from './env_helper';
 import { SimplePublicKey, Wallet } from "@terra-money/terra.js"
 
 interface MintRequest{
@@ -63,27 +63,15 @@ async function main() {
 
   }
   let signature = await signRedeemRequest(mintRequest, minter);
-  console.log("Signature", signature);
-  console.log("PubKey", getAuthPubkey(minter));
-  console.log("Message", mintRequest);
-
-  const crypto = require('crypto');
-
-
-  const secret = JSON.stringify(mintRequest);
-  const hash = crypto.createHash('sha256', secret).digest("hex")
-  console.log(hash)
 
 
   let mintExecuteMsg = {
     mint_request: mintRequest,
     signature
   }
-  console.log(mintExecuteMsg)
-
-
-  let testMintMsg = {"mint_request":{"mint_msg":{"token_id":"test","owner":"terra1kj6vwwvsw7vy7x35mazqfxyln2gk5xy00r87qy","token_uri":"test","extension":null},"nft_contract":"terra1lwkwa4k6fskmtle9a5camewnv4eglrxsjs30et2d5k25kt75fujsg9curs"},"signature":"ELDnEt3Rpiiavyfyb/cZc/LdLf4DGWyjHsUAPeQL0L1pxG6dxAOUH3N5ta4FduUXLgpW6GQWCzrKlNCyJnE7ng=="}
-  let response = await minter_contract.execute.mint(testMintMsg, '443uluna')
+  let response = await minter_contract.execute.mint(mintExecuteMsg, '443uluna')
+  //let testMintMsg = {"mint_request":{"mint_msg":{"token_id":"test","owner":"terra1kj6vwwvsw7vy7x35mazqfxyln2gk5xy00r87qy","token_uri":"test","extension":null},"nft_contract":"terra1lwkwa4k6fskmtle9a5camewnv4eglrxsjs30et2d5k25kt75fujsg9curs"},"signature":"ELDnEt3Rpiiavyfyb/cZc/LdLf4DGWyjHsUAPeQL0L1pxG6dxAOUH3N5ta4FduUXLgpW6GQWCzrKlNCyJnE7ng=="}
+  //let response = await minter_contract.execute.mint(testMintMsg, '443uluna')
   console.log(response);
 }
 

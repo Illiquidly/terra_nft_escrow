@@ -1,5 +1,4 @@
 dist/*
-ipfs/*
-ipfs_client/*
-orbitdb/*
 node_modules/*
+mnemonics.json
+env.json

@@ -52,6 +52,9 @@ pub enum ExecuteMsg<T: Clone> {
     SetFeePrice {
         price: Uint128
     },
+    SetProjectFeePrice {
+        price: Uint128
+    },
     SetNftContract {
         nft_contract: String
     },
@@ -60,7 +63,7 @@ pub enum ExecuteMsg<T: Clone> {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum QueryMsg {
-   
+   FeePrice{}
 }
 
 
@@ -87,4 +90,11 @@ pub fn into_cosmos_msg<M: Serialize, T: Into<String>>(
 pub struct MintRequest<T>{
     pub mint_msg: MintMsg<T>,
     pub nft_contract: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct FeeResponse{
+    pub fee_price: Uint128,
+    pub project_price: Uint128,
 }

@@ -14,29 +14,34 @@ export function getAuthPubkey(wallet: Wallet): string {
 async function main() {
   // Getting a handler for the current address
   let handler = new Address(env['mnemonics'][0]);
+  let treasury = "";
+  let project_treasury = "";
+  let minter = new Address(env['mnemonics'][3]).wallet;
 
   console.log(handler.getAddress());
 
   // Uploading the contract code
-  let contract = process.argv[3]!;
-  let codeName: string = "";
-  if(contract == "escrow"){
-    codeName = '../artifacts/nft_escrow_classic.wasm';   
-  }else if(contract == "minter"){
-    codeName = '../artifacts/minter.wasm';   
-  }else if(contract == "nft"){
-    if(env.type == "classic"){
-      codeName = '../artifacts/cw721_base0.16.wasm';
-    }else{
-      codeName = '../artifacts/cw721_base1.0.wasm';
-    }
-  }
-
-  let codeId: string[] = await handler.uploadContract(
-      codeName
+  
+  let loan_codeId: string[] = await handler.uploadContract(
+    '../artifacts/minter.wasm'
   );
 
-  console.log(+codeId[0]);
+
+  // Initialize p2p contract
+  let escrowInitMsg = {
+    name: 'NFTMinter',
+    minter: getAuthPubkey(minter),
+    fee_price: "190",
+    treasury: handler.getAddress(),
+    project_price: "253",
+    project_treasury: handler.getAddress()
+  };
+  console.log(escrowInitMsg);
+
+  let minter_contract = await handler.instantiateContract(+loan_codeId[0], escrowInitMsg);
+  add_contract('minter', minter_contract.address);
+
+  console.log('Uploaded the minter contract');
 }
 
 main()
