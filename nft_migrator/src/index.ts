@@ -86,10 +86,10 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
     token_uri: tokenMetadata.token_uri ?? null,
     extension: tokenMetadata.extension ?? null
   }
+  console.log(mintMsg)
   let mintRequest: MintRequest = {
     mint_msg: mintMsg,
     nft_contract: nftAddress2
-
   }
   let signature = await signRedeemRequest(mintRequest, minter);
 
@@ -149,7 +149,8 @@ async function main() {
         console.log(error)
           return res.status(404).send({
             error_text:"Error occured while migrating the token", 
-            error: error.message
+            error_message: error.message,
+            full_error: error
           });
       });
   });
