@@ -92,7 +92,7 @@ async function main() {
   // We set the mnemonic and address for the minter of the contract
   let mnemonics = require("../mnemonics.json")
   mnemonics[nftAddress] = {
-    "minter":process.env.MINTER_MNEMONIC
+    "mnemonic":process.env.MINTER_MNEMONIC
   }
   data = JSON.stringify(mnemonics,undefined, 4);
   fs.writeFileSync("mnemonics.json", data);

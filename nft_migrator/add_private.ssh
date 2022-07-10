@@ -1,2 +1,2 @@
 #/bin/bash
-scp -i ~/.ssh/id_ed25519 mnemonics.json env.json illiquidly@83-229-83-52.cloud-xip.io:/home/illiquidly/terra_nft_escrow/nft_migrator/
+scp mnemonics.json env.json illiquidly@83-229-83-52.cloud-xip.io:/home/illiquidly/terra_nft_escrow/nft_migrator/
