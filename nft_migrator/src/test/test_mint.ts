@@ -1,5 +1,5 @@
-import { Address } from './terra_utils';
-import { env } from './env_helper';
+import { Address } from '../terra_utils';
+import { env } from '../env_helper';
 import { SimplePublicKey, Wallet } from "@terra-money/terra.js"
 
 interface MintRequest{

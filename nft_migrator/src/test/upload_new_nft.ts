@@ -1,5 +1,5 @@
-import { Address } from './terra_utils';
-import { env, add_uploaded_nft } from './env_helper';
+import { Address } from '../terra_utils';
+import { env, add_uploaded_nft } from '../env_helper';
 
 async function main() {
   // Getting a handler for the current address

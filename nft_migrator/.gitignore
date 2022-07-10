@@ -2,3 +2,4 @@ dist/*
 node_modules/*
 mnemonics.json
 env.json
+.init_migration
