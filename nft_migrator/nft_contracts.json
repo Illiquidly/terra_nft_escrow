@@ -16,5 +16,14 @@
         "minter_contract": "terra16tfjfc0jl3pem87ghtsgxlf7yhk5q4kgfge5yswee2enuvkh7pcs9flkkz",
         "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
         "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
+    },
+    "terra14j9q7ffhmdgl4sgl8ej95z442500hcg058t4qr": {
+        "name": "Terra Meta Royals: Golden Tickets",
+        "contract1": "terra14j9q7ffhmdgl4sgl8ej95z442500hcg058t4qr",
+        "contract2": "terra17qlzq5f9ftlp77u9r95xtgwfjn56dhyjnydqnsqvxghfzr7ftnzskyfcgm",
+        "escrow_contract": "terra1laen3cqag8pw56258546599fh7y8sl4k246vxh",
+        "minter_contract": "terra1zzfsnet9skuvdsr2gpu2h4wzg6wl6hpg0r6xp94npg2yp6plw6lsl9mxh2",
+        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
+        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
     }
 }
