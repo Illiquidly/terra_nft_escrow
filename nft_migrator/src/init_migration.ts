@@ -63,7 +63,7 @@ async function main() {
    let nftInitMsg = {
     name: nftName,
     symbol: nftSymbol,
-    minter: minter.getAddress()  
+    minter: minterContract.address  
   };
   let nftContract = await minter.instantiateContract(nftCodeId, nftInitMsg)
   console.log("NFT contract uploaded")
