@@ -25,5 +25,14 @@
         "minter_contract": "terra12vc8e3gjwue363ynd8q5zv0ty9wjqyacnhpd0d94ps7u37t5jm3qyajfd4",
         "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
         "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
+    },
+    "terra1n8dw3x4s4dzw0uzw6c5seww203trshpr2avh4y": {
+        "name": "Lootopians",
+        "contract1": "terra1n8dw3x4s4dzw0uzw6c5seww203trshpr2avh4y",
+        "contract2": "terra1tu87uvvzum70ntd68lyvm3l8sje59vxm2c0d8yawn9m9hpcung0q3z3vgk",
+        "escrow_contract": "terra1pla92nz8j293qnh5ehlkhavxz2gymjtczqhjnh",
+        "minter_contract": "terra1luxwnzkfjtpwn8n9aujj37kskg8qzrpq7m0zy5fpck5hydclv03scrpl0j",
+        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
+        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
     }
 }

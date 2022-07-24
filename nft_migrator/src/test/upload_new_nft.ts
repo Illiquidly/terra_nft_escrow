@@ -9,7 +9,6 @@ async function main() {
   );
 
   // Uploading the contract code
-  
   let nft_codeId: string[];
   if(env.type == "classic"){
     nft_codeId = await handler.uploadContract(

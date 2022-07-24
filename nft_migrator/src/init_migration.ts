@@ -1,5 +1,5 @@
 import { Address } from './terra_utils';
-import { env, globalEnv } from './env_helper';
+import { env, env_name, globalEnv } from './env_helper';
 import { SimplePublicKey, Wallet } from "@terra-money/terra.js"
 import fs from "fs";
 require('dotenv').config({ path: `.init_migration` })
@@ -45,7 +45,7 @@ async function main() {
   };
   console.log(escrowInitMsg);
   let escrowContract = await minter_classic.instantiateContract(escrowCodeId, escrowInitMsg);
-  console.log("Escrow contract uploaded")
+  console.log("Escrow contract uploaded", escrowContract.address)
   // Then we upload a minter contract on Terra 2.0
   let minterInitMsg = {
     name: 'NFTMinter',
@@ -57,16 +57,18 @@ async function main() {
   };
   console.log(minterInitMsg)
   let minterContract = await minter.instantiateContract(minterCodeId, minterInitMsg);
-  console.log("Minter contract uploaded")
+  console.log("Minter contract uploaded", minterContract.address)
 
   // Then we upload a new NFT contract (with some first metadata)
    let nftInitMsg = {
     name: nftName,
     symbol: nftSymbol,
-    minter: minterContract.address  
+    minter: minterContract.address,  
+    owner: minter.getAddress(),
+    router_address: minter.getAddress(),
   };
   let nftContract = await minter.instantiateContract(nftCodeId, nftInitMsg)
-  console.log("NFT contract uploaded")
+  console.log("NFT contract uploaded", nftContract.address)
   // Then we set the NFT contract on the minter contract
   await minterContract.execute.set_nft_contract({
     nft_contract: nftContract.address,

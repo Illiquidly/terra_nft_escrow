@@ -727,6 +727,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "minter-metadata-lootopians"
+version = "0.9.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "cosmwasm-schema 1.0.0",
+ "cosmwasm-std 1.0.0",
+ "cw-storage-plus 0.13.4",
+ "cw20-base",
+ "cw721-base 0.13.2",
+ "cw721-metadata-onchain",
+ "minter-export",
+ "schemars",
+ "serde",
+ "sha2",
+ "terra-cosmwasm",
+ "thiserror",
+]
+
+[[package]]
 name = "nft-escrow-classic"
 version = "0.0.1"
 dependencies = [

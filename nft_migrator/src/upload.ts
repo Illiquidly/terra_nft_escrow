@@ -34,6 +34,8 @@ async function main() {
     }
   }else if(contract == "nft_metadata"){
     codeName = '../artifacts/cw721_metadata1.0.wasm';
+  }else{
+    codeName = contract;
   }
 
   let codeId: string[] = await handler.uploadContract(
