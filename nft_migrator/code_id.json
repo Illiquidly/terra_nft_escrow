@@ -11,6 +11,8 @@
     "production":{
         "nft":0,
         "minter":0,
+        "lootopians": 259,
+        "minter_metadata_lootopians":260,
     },
     "classic":{
         "escrow":5855,

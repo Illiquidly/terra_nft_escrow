@@ -34,7 +34,7 @@ async function main() {
     console.log("Contract already migrated")
     return;
   }
-
+  
   let minter = new Address(process.env.MINTER_MNEMONIC);
   let minter_classic = new Address(globalEnv["classic"].mnemonics[0],"classic");
 
