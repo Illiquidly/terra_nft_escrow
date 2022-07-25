@@ -1,0 +1,11 @@
+{
+    "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm": {
+        "name": "Lootopians",
+        "contract1": "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm",
+        "contract2": "terra1c649ctpkwqa9h65g6xmplrncc55d5nzqgz30zhtkcysedkd63zcq02uhs8",
+        "escrow_contract": "terra18f3kvyggdqngyprtzsrx6ee4c3akusl7rgrw3c",
+        "minter_contract": "terra19rl42zn833g6j4fgx403t2rfe9369a98zvum64dus00haj0d54esygxy28",
+        "project_treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n",
+        "treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n"
+    }
+}

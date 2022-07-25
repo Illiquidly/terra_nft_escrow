@@ -19,13 +19,7 @@ async function main() {
   let minter = new Address(env['mnemonics'][3]).wallet;
 
   console.log(handler.getAddress());
-
-  // Uploading the contract code
-  
-  let loan_codeId: string[] = await handler.uploadContract(
-    '../artifacts/minter.wasm'
-  );
-
+  let loanCodeID = 56;
 
   // Initialize p2p contract
   let escrowInitMsg = {
@@ -38,8 +32,12 @@ async function main() {
   };
   console.log(escrowInitMsg);
 
-  let minter_contract = await handler.instantiateContract(+loan_codeId[0], escrowInitMsg);
-  add_contract('minter', minter_contract.address);
+  let minter_contract = await handler.instantiateContract(loanCodeID, escrowInitMsg);
+  console.log(minter_contract)
+  let response = await minter_contract.execute.set_treasury({
+    treasury: handler.getAddress()
+  })
+  console.log(response)
 
   console.log('Uploaded the minter contract');
 }

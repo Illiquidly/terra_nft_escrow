@@ -55,6 +55,12 @@ pub enum ExecuteMsg<T: Clone> {
     SetProjectFeePrice {
         price: Uint128
     },
+    SetTreasury {
+        treasury: String
+    },
+    SetProjectTreasury {
+        treasury: String
+    },
     SetNftContract {
         nft_contract: String
     },

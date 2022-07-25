@@ -91,6 +91,22 @@ pub fn execute<T: Clone + Serialize + Debug>(
             info,
             price
         ),
+        ExecuteMsg::SetTreasury {
+            treasury
+        } => set_treasury(
+            deps,
+            env,
+            info,
+            treasury
+        ),
+        ExecuteMsg::SetProjectTreasury {
+            treasury
+        } => set_project_treasury(
+            deps,
+            env,
+            info,
+            treasury
+        ),
         ExecuteMsg::SetNftContract {
             nft_contract
         } => set_nft_contract(
@@ -300,6 +316,45 @@ pub fn set_project_price(
         .add_attribute("action", "parameter_update")
         .add_attribute("parameter", "project_fee_price")
         .add_attribute("value",price.to_string()))
+}
+
+pub fn set_treasury(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    treasury: String
+) -> Result<Response> {
+    is_owner(deps.as_ref(), info.sender)?;
+    let treasury = deps.api.addr_validate(&treasury)?;
+    CONTRACT_INFO.update::<_, StdError>(deps.storage, |mut x| {
+        x.treasury = treasury.clone();
+        Ok(x)
+    })?;
+
+    Ok(Response::new()
+        .add_attribute("action", "parameter_update")
+        .add_attribute("parameter", "treasury")
+        .add_attribute("value",treasury.to_string()))
+}
+
+pub fn set_project_treasury(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    treasury: String,
+) -> Result<Response> {
+    is_owner(deps.as_ref(), info.sender)?;
+    let treasury = deps.api.addr_validate(&treasury)?;
+
+    CONTRACT_INFO.update::<_, StdError>(deps.storage, |mut x| {
+        x.project_treasury = treasury.clone();
+        Ok(x)
+    })?;
+
+    Ok(Response::new()
+        .add_attribute("action", "parameter_update")
+        .add_attribute("parameter", "project_treasury")
+        .add_attribute("value", treasury.to_string()))
 }
 
 pub fn set_nft_contract(

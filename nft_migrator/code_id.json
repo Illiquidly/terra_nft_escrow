@@ -13,10 +13,11 @@
         "minter":0,
         "lootopians": 259,
         "minter_metadata_lootopians":260,
+        "minter_metadata": é
     },
     "classic":{
         "escrow":5855,
-        "lootopians":5893,
+        "lootopians" : 5893,
         "lootopian_items": 5894
     }
 }

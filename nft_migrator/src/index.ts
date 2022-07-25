@@ -62,6 +62,7 @@ export async function signRedeemRequest(
 
 let terra_classic = new LCDClient(globalEnv["classic"]['chain']);
 
+
 async function getTokenMintMessage(contractInfo: any, userAddress: string, tokenId: string): Promise<any>{
   // We try to send the token.
   let nftAddress2 = contractInfo.contract2;
@@ -154,6 +155,85 @@ async function main() {
           });
       });
   });
+
+  // Special Lootopian item process
+
+
+  let lootopian_classic_contract = "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm";
+  let lootopian_item_classic_contract = "terra1gx478xey87dq3dz2sfdt6rfcd0snqpj83ypd3x";
+  app.get('/migrator/migrate/lootopian-item/:address/:contract/:tokenId', async (req: any, res: any) => {
+      const address = req.params.address;
+      const contract = req.params.contract;
+      const tokenId = req.params.tokenId;
+      if(contract != lootopian_classic_contract){
+        await res.status(404).send("Contract was not registered with this api");
+        return;
+      } 
+
+      // We verify the contract is registered with the api
+      let contractInfo = contractList[contract];
+      if(!contractInfo){
+        await res.status(404).send("Contract was not registered with this api");
+        return;
+      }
+
+      // We query the Terra 1.0 chain to make sure the designated NFT has been deposited by the address in the escrow contract
+      await terra_classic.wasm.contractQuery(
+        contractInfo.escrow_contract,
+        {
+          depositor:{
+            token_id: tokenId
+          }
+        }
+      ).then((response: any)=>{
+        // If there is a response, we check it matches the info sent
+        if(response?.token_id != tokenId){
+          throw Error("Token not deposited");
+        }else if(response.depositor != address){
+          throw Error("Token not deposited by the indicated user");
+        }
+        // We need to query the items tokenId
+        return getLootopianItemTokenIds(tokenId);
+      })
+      .then((tokenIds: number[])=>{
+        let itemContractInfo = contractList[lootopian_item_classic_contract];
+        return Promise.all(tokenIds
+          .map((tokenId: number)=>{
+              return getTokenMintMessage(itemContractInfo, contractInfo.contract2, tokenId.toString());
+          }))
+      })
+      .then((migrateMsgs: any[])=>{
+          return res.status(200).send(migrateMsgs);        
+      })
+      .catch((error) =>{
+        console.log(error)
+          return res.status(404).send({
+            error_text:"Error occured while migrating the token", 
+            error_message: error.message,
+            full_error: error
+          });
+      });
+  });
+
+  async function getLootopianItemTokenIds(tokenId: String): Promise<number[]>{
+     let tokenMetadata: any = await terra_classic.wasm.contractQuery(
+      lootopian_classic_contract,
+      {
+        nft_info:{
+          token_id: tokenId
+        }
+      }
+    )
+    
+    return tokenMetadata.extension.sections
+      .map((section: any)=> section.nft_token_id)
+      .filter((tokenId: number)=> tokenId!=0)
+  }
+
+  /**************************************/
+  /*  END Lootopian specific features   */
+  /**************************************/
+
 
   if (process.env.EXECUTION == 'PRODUCTION') {
     const options = {
