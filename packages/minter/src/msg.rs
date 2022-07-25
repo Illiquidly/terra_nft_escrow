@@ -43,11 +43,14 @@ pub enum ExecuteMsg<T: Clone> {
         mint_request: MintRequest<T>,
         signature: String
     },
-    SetMinter {
-        minter: String,
-    },
     SetOwner {
         owner: String
+    },
+    SetNftContract {
+        nft_contract: String
+    },
+    SetMinter {
+        minter: String,
     },
     SetFeePrice {
         price: Uint128
@@ -60,9 +63,6 @@ pub enum ExecuteMsg<T: Clone> {
     },
     SetProjectTreasury {
         treasury: String
-    },
-    SetNftContract {
-        nft_contract: String
     },
 }
 

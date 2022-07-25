@@ -37,16 +37,11 @@ async function main() {
   
   let minter = new Address(process.env.MINTER_MNEMONIC);
   let minter_classic = new Address(globalEnv["classic"].mnemonics[0],"classic");
-  
-  // We start by uploading an escrow contract on Terra Classic
-   let escrowInitMsg = {
-    name: 'NFTEscrow',
-    nft_address: nftAddress
-  };
-  console.log(escrowInitMsg);
-  let escrowContract = await minter_classic.instantiateContract(escrowCodeId, escrowInitMsg);
-  console.log("Escrow contract uploaded", escrowContract.address)
-  
+
+  let escrowContract = {
+    address: "terra18f3kvyggdqngyprtzsrx6ee4c3akusl7rgrw3c"
+  }
+  /*
   // Then we upload a minter contract on Terra 2.0
   let minterInitMsg = {
     name: 'NFTMinter',
@@ -59,22 +54,26 @@ async function main() {
   console.log(minterInitMsg)
   let minterContract = await minter.instantiateContract(minterCodeId, minterInitMsg);
   console.log("Minter contract uploaded", minterContract.address)
+  */
 
   // Then we upload a new NFT contract (with some first metadata)
-   let nftInitMsg = {
-    name: nftName,
-    symbol: nftSymbol,
-    minter: minterContract.address,  
-    owner: minter.getAddress(),
-    router_address: minter.getAddress(),
-  };
-  let nftContract = await minter.instantiateContract(nftCodeId, nftInitMsg)
+
+  let minterContract = await minter.getContract("terra1mcjgaclqg75jwfqr9cxkh7e77zv3k8fg7h3hp84fe8epj2ku5vws0krrmz")
+  let nftContract = await minter.getContract("terra1c649ctpkwqa9h65g6xmplrncc55d5nzqgz30zhtkcysedkd63zcq02uhs8")
   console.log("NFT contract uploaded", nftContract.address)
   // Then we set the NFT contract on the minter contract
+  /*
   await minterContract.execute.set_nft_contract({
     nft_contract: nftContract.address,
   })
-  console.log("NFT Contract Set")
+  */
+
+  // Then we change the minter on the nftContract
+  nftContract.execute.update_config({
+    config_key: "minter",
+    config_value : minterContract.address
+  })
+
 
   // Finally we save the info to the nft_contracts.json file
   let nftContractObject = {

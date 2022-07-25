@@ -1,46 +1,19 @@
 {
-    "terra1gk0efa3lwk56v29qeyjjeqac0qz2vay8jg0875": {
-        "name": "Galactic Punks",
-        "contract1": "terra1gk0efa3lwk56v29qeyjjeqac0qz2vay8jg0875",
-        "contract2": "terra1du54lyda3ehv5v8e4n60zg8t8j787jy5644y6jkh8wx83uad94nsayzzg9",
-        "escrow_contract": "terra1dfpdrwftjg07fru7xx67uhwzmrq3w6zp78wvxk",
-        "minter_contract": "terra1p2jgq7ymh3av88qyzr6cqtnvpqplmqpnyl584dy8gf4ggtp5tdwqvd4l5d",
-        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
-        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
-    },
-    "terra18hagd6xf4m2wan5eesdcrnh8rpg23yzwgdg7mh": {
-        "name": "Test 1",
-        "contract1": "terra18hagd6xf4m2wan5eesdcrnh8rpg23yzwgdg7mh",
-        "contract2": "terra1amqgej89any98cnm7629e294eem0u369duj8mt6cq7rgs7lxpnuq3859z9",
-        "escrow_contract": "terra1kfqjyatm4rh5m492cnr4ahamfpud2hnlnh0fyz",
-        "minter_contract": "terra16tfjfc0jl3pem87ghtsgxlf7yhk5q4kgfge5yswee2enuvkh7pcs9flkkz",
-        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
-        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
-    },
-    "terra14j9q7ffhmdgl4sgl8ej95z442500hcg058t4qr": {
-        "name": "Terra Meta Royals: Golden Tickets",
-        "contract1": "terra14j9q7ffhmdgl4sgl8ej95z442500hcg058t4qr",
-        "contract2": "terra1hry9n78zhne5h7hjsu4nt33yz9znm89fsar2reflt8mnlq30auvq6v8uuf",
-        "escrow_contract": "terra1qn43cqdglgkkxdd4gjd5pfv3uhc3sz33w7e5nx",
-        "minter_contract": "terra12vc8e3gjwue363ynd8q5zv0ty9wjqyacnhpd0d94ps7u37t5jm3qyajfd4",
-        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
-        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
-    },
-    "terra1n8dw3x4s4dzw0uzw6c5seww203trshpr2avh4y": {
-        "name": "Lootopians",
-        "contract1": "terra1n8dw3x4s4dzw0uzw6c5seww203trshpr2avh4y",
-        "contract2": "terra1tu87uvvzum70ntd68lyvm3l8sje59vxm2c0d8yawn9m9hpcung0q3z3vgk",
-        "escrow_contract": "terra1pla92nz8j293qnh5ehlkhavxz2gymjtczqhjnh",
-        "minter_contract": "terra1luxwnzkfjtpwn8n9aujj37kskg8qzrpq7m0zy5fpck5hydclv03scrpl0j",
-        "project_treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n",
-        "treasury": "terra19v50nnefsc56379rm28dp8eur3hd56cujrtq7n"
-    },
-    "terra15y0fcsm7yu3pslayg7wllu6tlfft0kuyuy5z6m": {
+    "terra1gx478xey87dq3dz2sfdt6rfcd0snqpj83ypd3x": {
         "name": "Lootopian Items",
-        "contract1": "terra15y0fcsm7yu3pslayg7wllu6tlfft0kuyuy5z6m",
-        "contract2": "terra1p6seu8pg0lzkad284263m58qgq9q8zwa465kgemal7g9jr8nmfrstnv3kf",
-        "escrow_contract": "terra1s4ecsh7w3vw432rc06vknhl3qvw4hru7c7djfl",
-        "minter_contract": "terra1h6k7f5r7g55pyd0s79a5tqgt9ayw4nd9jmlv5ck20j7705yqpels23xm0n",
+        "contract1": "terra1gx478xey87dq3dz2sfdt6rfcd0snqpj83ypd3x",
+        "contract2": "terra1h4me76lqd2450e8jnduewen2vpyfrxlekhtql9aed6kt48thkqqqu00vjq",
+        "escrow_contract": "terra1e5ljuwy9l44w04fvw9wdq7z3khwhlycpm736hm",
+        "minter_contract": "terra1gu7yfhv45w7afyaqjyd3hdy97dz6kj9tgf3ldq7zy9wphxhq9w6sqey2x0",
+        "project_treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n",
+        "treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n"
+    },
+    "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm": {
+        "name": "Lootopian",
+        "contract1": "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm",
+        "contract2": "terra1c649ctpkwqa9h65g6xmplrncc55d5nzqgz30zhtkcysedkd63zcq02uhs8",
+        "escrow_contract": "terra18f3kvyggdqngyprtzsrx6ee4c3akusl7rgrw3c",
+        "minter_contract": "terra1mcjgaclqg75jwfqr9cxkh7e77zv3k8fg7h3hp84fe8epj2ku5vws0krrmz",
         "project_treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n",
         "treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n"
     }

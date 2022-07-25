@@ -19,7 +19,7 @@ async function main() {
   let minter = new Address(env['mnemonics'][3]).wallet;
 
   console.log(handler.getAddress());
-  let loanCodeID = 56;
+  let loanCodeID = 2375;
 
   // Initialize p2p contract
   let escrowInitMsg = {
