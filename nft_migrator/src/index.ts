@@ -161,17 +161,20 @@ async function main() {
 
   let lootopian_classic_contract = "terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm";
   let lootopian_item_classic_contract = "terra1gx478xey87dq3dz2sfdt6rfcd0snqpj83ypd3x";
-  app.get('/migrator/migrate/lootopian-item/:address/:contract/:tokenId', async (req: any, res: any) => {
+
+
+  app.get('/migrator/migrate/lootopian-item/:address/:contract/:lootopianId/:itemId', async (req: any, res: any) => {
       const address = req.params.address;
       const contract = req.params.contract;
-      const tokenId = req.params.tokenId;
-      if(contract != lootopian_classic_contract){
+      const lootopianId = req.params.lootopianId;
+      const itemTokenId = req.params.itemId;
+      if(contract != lootopian_item_classic_contract){
         await res.status(404).send("Contract was not registered with this api");
         return;
       } 
 
       // We verify the contract is registered with the api
-      let contractInfo = contractList[contract];
+      let contractInfo = contractList[lootopian_classic_contract];
       if(!contractInfo){
         await res.status(404).send("Contract was not registered with this api");
         return;
@@ -182,28 +185,29 @@ async function main() {
         contractInfo.escrow_contract,
         {
           depositor:{
-            token_id: tokenId
+            token_id: lootopianId
           }
         }
-      ).then((response: any)=>{
+      ).then(async (response: any)=>{
         // If there is a response, we check it matches the info sent
-        if(response?.token_id != tokenId){
+        if(response?.token_id != lootopianId){
           throw Error("Token not deposited");
         }else if(response.depositor != address){
           throw Error("Token not deposited by the indicated user");
         }
         // We need to query the items tokenId
-        return getLootopianItemTokenIds(tokenId);
+       let depositedTokens = await  getLootopianItemTokenIds(lootopianId);
+       if(!depositedTokens.includes(parseInt(itemTokenId))){
+          throw Error("Token not associated with this lootopian");
+       }
+       return itemTokenId
       })
-      .then((tokenIds: number[])=>{
+      .then((tokenId: string)=>{
         let itemContractInfo = contractList[lootopian_item_classic_contract];
-        return Promise.all(tokenIds
-          .map((tokenId: number)=>{
-              return getTokenMintMessage(itemContractInfo, contractInfo.contract2, tokenId.toString());
-          }))
+        return getTokenMintMessage(itemContractInfo, contractInfo.contract2, tokenId);
       })
-      .then((migrateMsgs: any[])=>{
-          return res.status(200).send(migrateMsgs);        
+      .then((migrateMsg: any)=>{
+          return res.status(200).send(migrateMsg);        
       })
       .catch((error) =>{
         console.log(error)
