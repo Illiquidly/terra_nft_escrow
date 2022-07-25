@@ -204,7 +204,7 @@ async function main() {
       })
       .then((tokenId: string)=>{
         let itemContractInfo = contractList[lootopian_item_classic_contract];
-        return getTokenMintMessage(itemContractInfo, contractInfo.contract2, tokenId);
+        return getTokenMintMessage(itemContractInfo, itemContractInfo.contract2, tokenId);
       })
       .then((migrateMsg: any)=>{
           return res.status(200).send(migrateMsg);        
