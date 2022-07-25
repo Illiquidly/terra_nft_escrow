@@ -16,5 +16,14 @@
         "minter_contract": "terra1mcjgaclqg75jwfqr9cxkh7e77zv3k8fg7h3hp84fe8epj2ku5vws0krrmz",
         "project_treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n",
         "treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n"
+    },
+    "terra103z9cnqm8psy0nyxqtugg6m7xnwvlkqdzm4s4k": {
+        "name": "Galactic Punks",
+        "contract1": "terra103z9cnqm8psy0nyxqtugg6m7xnwvlkqdzm4s4k",
+        "contract2": "terra1dpryq9v7aqdzgkjkn9tgxstw7mclj78evh7zegupek4jjwsgt0wq7r26wp",
+        "escrow_contract": "terra1vryc225l0vmvpfhz707cu6wgmt3uuktsgpq3qt",
+        "minter_contract": "terra1fmmaqtmp6py4rs77uye5xuwgnjh2gp5qgpmtwg44pfcfe9a2f2aq0wf0qa",
+        "project_treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     }
 }

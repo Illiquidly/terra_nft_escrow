@@ -10,6 +10,7 @@
     },
     "production":{
         "nft":0,
+        "nft_metadata":268,
         "minter":0,
         "lootopians": 259,
         "lootopian_items": 265,
