@@ -50,6 +50,11 @@ interface MintMsg{
   token_uri: String|undefined,
   extension: any
 }
+interface Attribute{
+  display_type: string | null,
+  trait_type: string,
+  value: string
+}
 
 export async function signRedeemRequest(
   data: MintRequest,
@@ -61,6 +66,35 @@ export async function signRedeemRequest(
 }
 
 let terra_classic = new LCDClient(globalEnv["classic"]['chain']);
+
+const METADATA_CORRECTIONS: { [key: string]: (...args: any[]) => [string, any] } = {
+  terra103z9cnqm8psy0nyxqtugg6m7xnwvlkqdzm4s4k: (metadata: any): [string, any] => {
+    // First we modify the tokenId
+    let [,newGpTokenId] = metadata.extension.name.split("#");
+
+    // Then we modify the rare attributes
+    let gpMetadataMap: {[key: string]: string} = {
+      "ponytail blonde": "galactic glitch",
+      "neat blonde": "galactic glitch",
+      "neat black": "galactic glitch",
+      "neat red": "galactic glitch",
+      "messy blonde": "galactic glitch",
+      "ponytail black": "galactic glitch",
+      "neat brown": "galactic glitch",
+      "messy brown": "galactic glitch",
+      "ponytail red": "galactic glitch",
+      "messy blue": "galactic glitch",
+      "messy pink": "galactic glitch",
+    }
+
+    metadata.extension.attributes = metadata.extension.attributes.map((attribute: Attribute)=>{
+      attribute.value = gpMetadataMap[attribute.value] ?? attribute.value;
+      return attribute
+    })
+
+    return [newGpTokenId ?? "", metadata]
+  }
+}
 
 
 async function getTokenMintMessage(contractInfo: any, userAddress: string, tokenId: string): Promise<any>{
@@ -79,15 +113,16 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
       }
     }
   )
-  console.log(tokenMetadata)
+  // Some projects want us to modify the token Metadata --> We do that
+  let [newTokenId, newTokenMetadata] = METADATA_CORRECTIONS[contractInfo.contract1]?.(tokenMetadata) ?? [tokenId, tokenMetadata];
 
   let mintMsg: MintMsg = {
-    token_id: tokenId,
+    token_id: newTokenId,
     owner: userAddress,
-    token_uri: tokenMetadata.token_uri ?? null,
-    extension: tokenMetadata.extension ?? null
+    token_uri: newTokenMetadata.token_uri ?? null,
+    extension: newTokenMetadata.extension ?? null
   }
-  console.log(mintMsg)
+
   let mintRequest: MintRequest = {
     mint_msg: mintMsg,
     nft_contract: nftAddress2
@@ -127,7 +162,7 @@ async function main() {
       }
 
       // We query the Terra 1.0 chain to make sure the designated NFT has been deposited by the address in the escrow contract
-      await terra_classic.wasm.contractQuery(
+      terra_classic.wasm.contractQuery(
         contractInfo.escrow_contract,
         {
           depositor:{
@@ -154,6 +189,14 @@ async function main() {
             full_error: error
           });
       });
+      
+      /* I leave that part as comment for collection specific testing
+      getTokenMintMessage(contractInfo, address, tokenId)
+      .then((migrateMsg)=>{
+          return res.status(200).send(migrateMsg);        
+      })
+      */
+
   });
 
   // Special Lootopian item process
@@ -196,7 +239,7 @@ async function main() {
           throw Error("Token not deposited by the indicated user");
         }
         // We need to query the items tokenId
-       let depositedTokens = await  getLootopianItemTokenIds(lootopianId);
+       let depositedTokens = await getLootopianItemTokenIds(lootopianId);
        if(!depositedTokens.includes(parseInt(itemTokenId))){
           throw Error("Token not associated with this lootopian");
        }
