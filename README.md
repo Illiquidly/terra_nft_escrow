@@ -1,5 +1,6 @@
 Migration Checklist : 
 
+0. Check the contract type the NFT has (especially metadata structure)
 1. Check the nft-migrator/code_id.json file to see if the code id associated with the minted NFT exists
 2. If not, use the upload.js file for example to have the code ID on chain (you have to adapt it a little for new code)
 3. Fill the nft-migrator/.init_migration file with all the necessary details
