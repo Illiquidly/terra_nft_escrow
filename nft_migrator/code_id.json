@@ -21,5 +21,9 @@
         "escrow":5855,
         "lootopians" : 5893,
         "lootopian_items": 5894
+    },
+    "dev":{
+        "nft": 18,
+        "minter": 19
     }
 }

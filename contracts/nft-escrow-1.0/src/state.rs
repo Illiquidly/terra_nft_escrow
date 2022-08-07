@@ -17,6 +17,9 @@ pub struct DepositNft<'a> {
     pub nfts: IndexedMap<'a, &'a str, TokenOwner, TokenIndexes<'a>>,
 }
 
+/**
+ * Structure used to save tokens and be able to query them by owner
+ * */
 impl Default for DepositNft<'_> {
     fn default() -> Self {
         let indexes: TokenIndexes = TokenIndexes {

@@ -15,6 +15,11 @@ use escrow_export_classic::state::{ContractInfo, TokenOwner};
 use crate::error::ContractError;
 use crate::state::{is_owner, DepositNft, CONTRACT_INFO};
 
+/**
+ * This package is used to lock NFTs
+ * It also allows to query deposited tokens and the address that deposited them easily
+ * This escrow contract only accepts one NFT (e.g. Galactic Punks)
+ * */
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn instantiate(
     deps: DepsMut,
@@ -49,7 +54,6 @@ pub fn execute(deps: DepsMut, env: Env, info: MessageInfo, msg: ExecuteMsg) -> R
         } => execute_receive_nft(deps, env, info, sender, token_id, msg),
 
         ExecuteMsg::SetOwner { owner } => set_owner(deps, env, info, owner),
-        ExecuteMsg::Migrated { token_id } => set_migrated(deps, env, info, token_id),
     }
 }
 
@@ -91,6 +95,10 @@ pub fn contract_info(deps: Deps) -> Result<ContractInfoResponse> {
 const DEFAULT_LIMIT: u32 = 10;
 const MAX_LIMIT: u32 = 30;
 
+/**
+ * Returns the deposited tokens by a specific owner address
+ * Supports pagination
+ * */
 pub fn user_tokens(
     deps: Deps,
     owner: String,
@@ -126,6 +134,10 @@ pub fn user_tokens(
     Ok(TokenInfoResponse { tokens })
 }
 
+/**
+ * Returns the deposited tokens in the contract without conditions.
+ * Supports pagination
+ * */
 pub fn registered_tokens(
     deps: Deps,
     start_after: Option<String>,
@@ -148,11 +160,18 @@ pub fn registered_tokens(
     Ok(TokenInfoResponse { tokens: tokens? })
 }
 
+/**
+ * Returns the depositor of a specific token_id
+ * */
 pub fn depositor(deps: Deps, token_id: String) -> StdResult<TokenInfo> {
     let depositor: TokenOwner = DepositNft::default().nfts.load(deps.storage, &token_id)?;
     Ok(to_token_info(token_id, depositor))
 }
 
+/**
+ * Sets the onwer of the contract.
+ * The owner has no other priviledge than to be the owner of the contract
+ * */
 pub fn set_owner(deps: DepsMut, _env: Env, info: MessageInfo, owner: String) -> Result<Response> {
     is_owner(deps.as_ref(), info.sender)?;
 
@@ -168,31 +187,12 @@ pub fn set_owner(deps: DepsMut, _env: Env, info: MessageInfo, owner: String) -> 
         .add_attribute("value", owner))
 }
 
-pub fn set_migrated(
-    deps: DepsMut,
-    env: Env,
-    info: MessageInfo,
-    token_id: String,
-) -> Result<Response> {
-    is_owner(deps.as_ref(), info.sender)?;
-
-    let token_owner = DepositNft::default()
-        .nfts
-        .update(deps.storage, &token_id, |x| match x {
-            Some(mut x) => {
-                x.migrated = true;
-                x.migrate_time = env.block.time;
-                Ok(x)
-            }
-            None => Err(anyhow!(ContractError::TokenNotDeposited {})),
-        })?;
-
-    Ok(Response::new()
-        .add_attribute("action", "migrated")
-        .add_attribute("token_id", token_id)
-        .add_attribute("depositor", token_owner.owner))
-}
-
+/**
+ * This function receives NFTs (is called after a token was deposited in the contract using the Send NFT function).
+ * The token_id should match the token_id indicated in the message
+ * The nft deposited should match the NFT registered as a contract name.
+ * It then saves the deposited token_id in a multiindex structure (just like NFTs)
+ * */
 pub fn execute_receive_nft(
     deps: DepsMut,
     env: Env,
@@ -217,6 +217,7 @@ pub fn execute_receive_nft(
             // We save the token to memory
             let sender_addr = deps.api.addr_validate(&sender)?;
 
+            // We save the deposited token_id in memory to be able to retrieve it later
             DepositNft::default().nfts.save(
                 deps.storage,
                 &token_id,
@@ -399,23 +400,17 @@ pub mod tests {
                     TokenInfo {
                         depositor: "creator".to_string(),
                         token_id: "id".to_string(),
-                        migrated: false,
                         deposit_time: Timestamp::from_nanos(1571797419879305533),
-                        migrate_time: Timestamp::from_nanos(0),
                     },
                     TokenInfo {
                         depositor: "creator".to_string(),
                         token_id: "id1".to_string(),
-                        migrated: false,
                         deposit_time: Timestamp::from_nanos(1571797419879305533),
-                        migrate_time: Timestamp::from_nanos(0),
                     },
                     TokenInfo {
                         depositor: "creator".to_string(),
                         token_id: "id2".to_string(),
-                        migrated: false,
                         deposit_time: Timestamp::from_nanos(1571797419879305533),
-                        migrate_time: Timestamp::from_nanos(0),
                     }
                 ]
             }
@@ -437,16 +432,12 @@ pub mod tests {
                     TokenInfo {
                         depositor: "creator".to_string(),
                         token_id: "id1".to_string(),
-                        migrated: false,
                         deposit_time: Timestamp::from_nanos(1571797419879305533),
-                        migrate_time: Timestamp::from_nanos(0),
                     },
                     TokenInfo {
                         depositor: "creator".to_string(),
                         token_id: "id2".to_string(),
-                        migrated: false,
                         deposit_time: Timestamp::from_nanos(1571797419879305533),
-                        migrate_time: Timestamp::from_nanos(0),
                     }
                 ]
             }
@@ -467,9 +458,7 @@ pub mod tests {
                 tokens: vec![TokenInfo {
                     depositor: "creator".to_string(),
                     token_id: "id1".to_string(),
-                    migrated: false,
                     deposit_time: Timestamp::from_nanos(1571797419879305533),
-                    migrate_time: Timestamp::from_nanos(0),
                 }]
             }
         );

@@ -25,9 +25,7 @@ pub fn to_token_info(token_id: String, token_owner: TokenOwner) -> TokenInfo {
     TokenInfo {
         token_id,
         depositor: token_owner.owner.to_string(),
-        migrated: token_owner.migrated,
         deposit_time: token_owner.deposit_time,
-        migrate_time: token_owner.migrate_time,
     }
 }
 
@@ -35,9 +33,7 @@ pub fn to_token_info(token_id: String, token_owner: TokenOwner) -> TokenInfo {
 pub struct TokenInfo {
     pub token_id: String,
     pub depositor: String,
-    pub migrated: bool,
     pub deposit_time: Timestamp,
-    pub migrate_time: Timestamp,
 }
 
 impl InstantiateMsg {
@@ -62,9 +58,6 @@ pub enum ExecuteMsg {
     },
     SetOwner {
         owner: String,
-    },
-    Migrated {
-        token_id: String,
     },
 }
 

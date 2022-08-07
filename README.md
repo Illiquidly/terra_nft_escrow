@@ -1,3 +1,11 @@
+This repository was used to migrate NFTs from Terra Classic to Terra 2.0
+There are 3 parts to this : 
+1. The escrow contract (located in [the nft-escrow 1.0 directory](contracts/nft-escrow-1.0))
+2. The minter authority (server located in the [nft_migrator](nft_migrator))
+3. The minter contract (located in the 3[contracts/minter](contracts/minter) folders)
+
+
+
 Migration Checklist : 
 
 0. Check the contract type the NFT has (especially metadata structure)
