@@ -43,5 +43,14 @@
         "minter_contract": "terra15mrkfpxnlw59zadpf78p6y9qyakvcfsu03ndp59mwa8fnxnl4yass8asxl",
         "project_treasury": "terra10qvk9q32cs6s8hswl8jru2kmaf2al473t7rmhp95uygku6aj3ljq8mke7n",
         "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
+    },
+    "terra1jdt2wnfhgy4ptk6m5kxacyj0k6e8rc7e2ugulz": {
+        "name": "TerraWhales",
+        "contract1": "terra1jdt2wnfhgy4ptk6m5kxacyj0k6e8rc7e2ugulz",
+        "contract2": "terra1g76gzatrn8jnhv7lhmx7aqm6afja4750rpmvypjp3vcw03amva5swskrs0",
+        "escrow_contract": "terra14vxv42ykp45m7y52c73z3nln2957shre7m8rpq",
+        "minter_contract": "terra18lhtus74hgt9nv57e8hel4v878y3dr083kxzu0fc2wds0c9hq9yq99mhpn",
+        "project_treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     }
 }

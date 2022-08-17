@@ -93,7 +93,7 @@ pub fn contract_info(deps: Deps) -> Result<ContractInfoResponse> {
 }
 
 const DEFAULT_LIMIT: u32 = 10;
-const MAX_LIMIT: u32 = 30;
+const MAX_LIMIT: u32 = 1000;
 
 /**
  * Returns the deposited tokens by a specific owner address

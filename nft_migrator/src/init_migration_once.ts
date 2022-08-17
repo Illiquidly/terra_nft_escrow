@@ -30,26 +30,25 @@ async function main() {
   let nftCodeId : number = +process.env.NFT_CODE_ID!;
 
   let nftContracts = require(`../${nftContractFilename}`);
-  /*
   if (nftContracts[nftAddress!] != undefined){
     console.log("Contract already migrated")
     return;
   }
-  */
+  
   let minter = new Address(process.env.MINTER_MNEMONIC);
   let minter_classic = new Address(globalEnv["classic"].mnemonics[0],"classic");
-  /*
+  
   // We start by uploading an escrow contract on Terra Classic
    let escrowInitMsg = {
     name: 'NFTEscrow',
     nft_address: nftAddress
   };
   console.log(escrowInitMsg);
+  console.log(minter.getAddress())
+  
   let escrowContract = await minter_classic.instantiateContract(escrowCodeId, escrowInitMsg);
   console.log("Escrow contract uploaded", escrowContract.address)
-  */
-  let escrowContract = minter_classic.getContract("terra1vryc225l0vmvpfhz707cu6wgmt3uuktsgpq3qt");
-
+  
   // Then we upload a minter contract on Terra 2.0
   let minterInitMsg = {
     name: 'NFTMinter',
