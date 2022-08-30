@@ -52,5 +52,14 @@
         "minter_contract": "terra18lhtus74hgt9nv57e8hel4v878y3dr083kxzu0fc2wds0c9hq9yq99mhpn",
         "project_treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n",
         "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
+    },
+    "terra1d0nmywxwm5hr0vz6v26qsz8q25m2v9j5adaws3": {
+        "name": "Astroport Lockdrop NFT",
+        "contract1": "terra1d0nmywxwm5hr0vz6v26qsz8q25m2v9j5adaws3",
+        "contract2": "terra1pkw7a047dna36hc7kxce90f9v3trszjamr2swzun0cfmc0k2jxdqahzf9c",
+        "escrow_contract": "terra1ddlvwv4sama20quxpmy4sjqn5q6zv56nnv894t",
+        "minter_contract": "terra1mtmlvvqsa06ulr3cuneh5ny8jfakycra9puk8fahkdqvzdjjzugq75nn9h",
+        "project_treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     }
 }
