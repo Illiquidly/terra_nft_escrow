@@ -6,7 +6,8 @@
         "minter_metadata":1922,
         "minter_metadata_lootopians":2352,
         "lootopians":2350,
-        "lootopian_items": 2351
+        "lootopian_items": 2351,
+        "change_minter":3677
     },
     "production":{
         "nft":0,
@@ -15,7 +16,8 @@
         "minter_metadata": 263,
         "lootopians": 259,
         "lootopian_items": 265,
-        "minter_metadata_lootopians":264
+        "minter_metadata_lootopians":264,
+        "nft_metadata_minter_change":386
     },
     "classic":{
         "escrow":5855,

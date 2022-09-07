@@ -61,5 +61,23 @@
         "minter_contract": "terra1mtmlvvqsa06ulr3cuneh5ny8jfakycra9puk8fahkdqvzdjjzugq75nn9h",
         "project_treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n",
         "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
+    },
+    "terra1r63hy95slv78mem0mma6pk7f2lcy3yrwgft48q": {
+        "name": "InterNFT",
+        "contract1": "terra1r63hy95slv78mem0mma6pk7f2lcy3yrwgft48q",
+        "contract2": "terra10h2zxfgap3ld4evqc6jczhpn6vjcdfhny4gx0k82c0xc658z9dnsepkndm",
+        "escrow_contract": "terra1ml87hx4w9t2eg37ywnfa83xtt9j52crm3qz8tw",
+        "minter_contract": "terra1xgy8acd35azpf9ea4249c625memfddhhegpec46nehmd8qk0fujspjdead",
+        "project_treasury": "terra14n2gl48awdcjdj779qkl6me9n935mt7ehcf59g",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
+    },
+    "terra1vsn6e0eelhla5n0j4rz6zz2qrla8qtx33vyk2t": {
+        "name": "RameNFT",
+        "contract1": "terra1vsn6e0eelhla5n0j4rz6zz2qrla8qtx33vyk2t",
+        "contract2": "terra1sf2fftvjt4z75g4rshngdxn5fr6qsccl78fgsz52fefwemxzvmaqptdfnp",
+        "escrow_contract": "terra1jta9e0dgewvklnly3dz7jmhnhcxyk7msvrreg0",
+        "minter_contract": "terra1ykdh99wjdhrtrjhrqawa2jfhutcdhwthvh0np0tkp43akzkr0nzseyqc6d",
+        "project_treasury": "terra14n2gl48awdcjdj779qkl6me9n935mt7ehcf59g",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     }
 }
