@@ -60,8 +60,11 @@ export async function signRedeemRequest(
   data: MintRequest,
   wallet: Wallet
 ): Promise<string> {
+  // First we parse the request into a metadata message : 
+
   const requestBuffer = Buffer.from(JSON.stringify(data));
   const signed = await wallet.key.sign(requestBuffer);
+  console.log(wallet.key.publicKey);
   return signed.toString('base64');
 }
 
@@ -92,6 +95,8 @@ const METADATA_CORRECTIONS: { [key: string]: (...args: any[]) => [string, any] }
       return attribute
     })
 
+
+
     return [newGpTokenId ?? "", metadata]
   }
 }
@@ -102,6 +107,7 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
   let nftAddress2 = contractInfo.contract2;
   let nftAddress1 = contractInfo.contract1;
   let minterMnemonic = mnemonics[nftAddress1].mnemonic;
+  console.log(minterMnemonic)
   let minter = new Address(minterMnemonic).wallet;
 
   
@@ -120,13 +126,28 @@ async function getTokenMintMessage(contractInfo: any, userAddress: string, token
     token_id: newTokenId,
     owner: userAddress,
     token_uri: newTokenMetadata.token_uri ?? null,
-    extension: newTokenMetadata.extension ?? null
+    extension: newTokenMetadata.extension ? {
+        image: newTokenMetadata.extension?.image ?? null,
+        image_data: newTokenMetadata.extension?.image_data ?? null,
+        external_url: newTokenMetadata.extension?.external_url ?? null,
+        description: newTokenMetadata.extension?.description ?? null,  
+        name: newTokenMetadata.extension?.name ?? null,
+        attributes: newTokenMetadata.extension?.attributes?.map((attribute: any)=>({
+          display_type: attribute.display_type,
+          trait_type: attribute.trait_type,
+          value: attribute.value,
+        })) ?? null,
+        background_color: newTokenMetadata.extension?.background_color ?? null,
+        animation_url: newTokenMetadata.extension?.animation_url ?? null,
+        youtube_url: newTokenMetadata.extension?.youtube_url ?? null,
+      } : null
   }
 
   let mintRequest: MintRequest = {
     mint_msg: mintMsg,
     nft_contract: nftAddress2
   }
+
   let signature = await signRedeemRequest(mintRequest, minter);
 
   let mintExecuteMsg = {
