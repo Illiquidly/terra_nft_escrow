@@ -1,7 +1,6 @@
 import { Address } from './terra_utils';
 import { env, add_contract } from './env_helper';
-import { SimplePublicKey, Wallet } from "@terra-money/terra.js"
-
+import { SimplePublicKey, Wallet } from '@terra-money/terra.js';
 
 export function getAuthPubkey(wallet: Wallet): string {
   if (wallet.key.publicKey == null) {

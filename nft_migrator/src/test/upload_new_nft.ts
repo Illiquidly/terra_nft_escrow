@@ -10,11 +10,11 @@ async function main() {
 
   // Uploading the contract code
   let nft_codeId: string[];
-  if(env.type == "classic"){
+  if (env.type == 'classic') {
     nft_codeId = await handler.uploadContract(
       '../artifacts/cw721_base0.16.wasm'
     );
-  }else{
+  } else {
     nft_codeId = await handler.uploadContract(
       '../artifacts/cw721_base1.0.wasm'
     );
@@ -26,11 +26,10 @@ async function main() {
   let NFTInitMsg = {
     name: codeName,
     symbol: 'ILIQ',
-    minter: env.contracts.minter  
+    minter: env.contracts.minter
   };
   let nft = await handler.instantiateContract(+nft_codeId[0], NFTInitMsg);
   add_uploaded_nft(codeName, nft.execute.contractAddress);
-
 }
 
 main()

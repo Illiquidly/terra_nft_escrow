@@ -1,7 +1,6 @@
 import { Address } from './terra_utils';
 import { env, add_contract } from './env_helper';
-import { SimplePublicKey, Wallet } from "@terra-money/terra.js"
-
+import { SimplePublicKey, Wallet } from '@terra-money/terra.js';
 
 export function getAuthPubkey(wallet: Wallet): string {
   if (wallet.key.publicKey == null) {
@@ -19,28 +18,26 @@ async function main() {
 
   // Uploading the contract code
   let contract = process.argv[3]!;
-  let codeName: string = "";
-  if(contract == "escrow"){
-    codeName = '../artifacts/nft_escrow_classic.wasm';   
-  }else if(contract == "minter"){
-    codeName = '../artifacts/minter.wasm';   
-  }else if(contract == "minter_metadata"){
-    codeName = '../artifacts/minter_metadata.wasm';   
-  }else if(contract == "nft"){
-    if(env.type == "classic"){
+  let codeName: string = '';
+  if (contract == 'escrow') {
+    codeName = '../artifacts/nft_escrow_classic.wasm';
+  } else if (contract == 'minter') {
+    codeName = '../artifacts/minter.wasm';
+  } else if (contract == 'minter_metadata') {
+    codeName = '../artifacts/minter_metadata.wasm';
+  } else if (contract == 'nft') {
+    if (env.type == 'classic') {
       codeName = '../artifacts/cw721_base0.16.wasm';
-    }else{
+    } else {
       codeName = '../artifacts/cw721_base1.0.wasm';
     }
-  }else if(contract == "nft_metadata"){
+  } else if (contract == 'nft_metadata') {
     codeName = '../artifacts/cw721_metadata1.0.wasm';
-  }else{
+  } else {
     codeName = contract;
   }
 
-  let codeId: string[] = await handler.uploadContract(
-      codeName
-  );
+  let codeId: string[] = await handler.uploadContract(codeName);
 
   console.log(+codeId[0]);
 }

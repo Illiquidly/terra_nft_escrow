@@ -41,4 +41,11 @@ function add_contract(contractName: string, address: string) {
   fs.writeFileSync('env.json', data);
 }
 
-export { env, env_name, globalEnv, add_uploaded_token, add_uploaded_nft, add_contract };
+export {
+  env,
+  env_name,
+  globalEnv,
+  add_uploaded_token,
+  add_uploaded_nft,
+  add_contract
+};

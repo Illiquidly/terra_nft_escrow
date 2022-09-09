@@ -10,7 +10,7 @@ import {
   MsgInstantiateContract
 } from '@terra-money/terra.js';
 import * as fs from 'fs';
-import {env, globalEnv} from "./env_helper";
+import { env, globalEnv } from './env_helper';
 
 // Wrapper for Query and Transaction objects (used to build a common Proxy on top of them)
 class LCDClientWrapper {
@@ -37,7 +37,6 @@ class Transaction extends LCDClientWrapper {
     return await this.terra.tx.broadcast(tx);
   }
 
-
   async execute(msgName: string, msgArgs: Object, otherArgs: any = {}) {
     let msg = {
       [msgName]: {
@@ -56,10 +55,8 @@ class Transaction extends LCDClientWrapper {
           `store code failed. code: ${response.code}, codespace: ${response.codespace}, raw_log: ${response.raw_log}`
         );
       } else {
-        let response_data: any = response['response']['data']
-        throw new Error(
-          JSON.stringify(response_data)
-        );
+        let response_data: any = response['response']['data'];
+        throw new Error(JSON.stringify(response_data));
       }
     });
     return response;
@@ -118,12 +115,12 @@ class Contract {
 export class Address {
   terra: LCDClient;
   wallet: Wallet;
-  env: any
+  env: any;
 
-  constructor(mnemonic: string = '', network: string| undefined = undefined) {
-    if(network){
-      this.env = globalEnv[network]
-    }else{
+  constructor(mnemonic: string = '', network: string | undefined = undefined) {
+    if (network) {
+      this.env = globalEnv[network];
+    } else {
       this.env = env;
     }
     this.terra = new LCDClient(this.env['chain']);
@@ -148,7 +145,6 @@ export class Address {
     return await this.post([send]);
   }
   async uploadContract(binaryFile: string) {
-
     const storeCode = new MsgStoreCode(
       this.wallet.key.accAddress,
       fs.readFileSync(binaryFile).toString('base64')
@@ -171,7 +167,7 @@ export class Address {
       codeId, // code ID
       initMsg,
       {}, // init coins,
-      "initContract"
+      'initContract'
     );
     const instantiateTxResult = await this.post([instantiate]);
 
@@ -180,12 +176,12 @@ export class Address {
         `instantiate failed. code: ${instantiateTxResult.code}, codespace: ${instantiateTxResult.codespace}, raw_log: ${instantiateTxResult.raw_log}`
       );
     }
-    if(this.env.type == "classic"){
+    if (this.env.type == 'classic') {
       const {
         instantiate_contract: { contract_address }
       } = instantiateTxResult.logs[0].eventsByType;
       return this.getContract(contract_address[0]);
-    }else{
+    } else {
       const {
         instantiate: { _contract_address }
       } = instantiateTxResult.logs[0].eventsByType;
