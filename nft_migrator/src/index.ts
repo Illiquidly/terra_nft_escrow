@@ -156,6 +156,7 @@ async function getTokenMintMessage(
     }
   );
   // Some projects want us to modify the token Metadata --> We do that
+  // We also correct the metadata so they match the new NFT contract structure
   let [newTokenId, newTokenMetadata] = METADATA_CORRECTIONS[
     contractInfo.contract1
   ]?.(tokenId, tokenMetadata) ?? [tokenId, tokenMetadata];
