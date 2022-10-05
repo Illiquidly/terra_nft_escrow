@@ -1,7 +1,7 @@
-use cosmwasm_std::{StdError, StdResult, Uint128, Coin, CosmosMsg, Binary, to_binary, WasmMsg};
+use cosmwasm_std::{to_binary, Binary, Coin, CosmosMsg, StdError, StdResult, Uint128, WasmMsg};
+use cw721_base::MintMsg;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use cw721_base::{ MintMsg};
 
 #[derive(Serialize, Deserialize, JsonSchema, Debug, Clone, PartialEq)]
 pub struct MigrateMsg {}
@@ -39,39 +39,38 @@ impl InstantiateMsg {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ExecuteMsg<T: Clone> {
-    Mint { 
+    Mint {
         mint_request: MintRequest<T>,
-        signature: String
+        signature: String,
     },
     SetOwner {
-        owner: String
+        owner: String,
     },
     SetNftContract {
-        nft_contract: String
+        nft_contract: String,
     },
     SetMinter {
         minter: String,
     },
     SetFeePrice {
-        price: Uint128
+        price: Uint128,
     },
     SetProjectFeePrice {
-        price: Uint128
+        price: Uint128,
     },
     SetTreasury {
-        treasury: String
+        treasury: String,
     },
     SetProjectTreasury {
-        treasury: String
+        treasury: String,
     },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum QueryMsg {
-   FeePrice{}
+    FeePrice {},
 }
-
 
 pub fn into_binary<M: Serialize>(msg: M) -> StdResult<Binary> {
     to_binary(&msg)
@@ -93,14 +92,14 @@ pub fn into_cosmos_msg<M: Serialize, T: Into<String>>(
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub struct MintRequest<T>{
+pub struct MintRequest<T> {
     pub mint_msg: MintMsg<T>,
     pub nft_contract: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub struct FeeResponse{
+pub struct FeeResponse {
     pub fee_price: Uint128,
     pub project_price: Uint128,
 }

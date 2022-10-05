@@ -1,7 +1,7 @@
+use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
+use cw721_metadata_onchain::Metadata;
 use std::env::current_dir;
 use std::fs::create_dir_all;
-use cw721_metadata_onchain::Metadata;
-use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
 
 // This is a simple type to let us handle empty extensions
 pub type Extension = Option<Metadata>;

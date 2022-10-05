@@ -13,11 +13,11 @@ export function getAuthPubkey(wallet: Wallet): string {
 async function main() {
   // Getting a handler for the current address
 
-  let projectContract = 'terra1tehe2e4ufa9n0xeef4wxvfvhncjyzetlp404wm';
+  let projectContract = 'terra1ycp3azjymqckrdlzpp88zfyk6x09m658c2c63d';
   let illiquidlabsTreasuryAddress =
     'terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n';
   let projectTreasury =
-    'terra17xqygpamm57q75plm59fzt5zc9au4awdxuzy2dpuke5tgpgjmx7s6uy7kn';
+    'terra1rhfcc28fu2dev0r9d20z3g38ewpg2cpr9lglrc';
 
   let mnemonic = require('../../mnemonics.json')[projectContract].mnemonic;
   let minter = require('../../nft_contracts.json')[projectContract]
@@ -41,10 +41,11 @@ async function main() {
     price: "600000"
   })
   */
-
+  /*
   await minterContract.execute.set_project_fee_price({
     price: '3000000'
   });
+  */
 }
 
 main()

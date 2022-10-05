@@ -1,5 +1,5 @@
 import { Address } from './terra_utils';
-import { env, add_contract } from './env_helper';
+import { env } from './env_helper';
 import { SimplePublicKey, Wallet } from '@terra-money/terra.js';
 
 export function getAuthPubkey(wallet: Wallet): string {
@@ -12,20 +12,16 @@ export function getAuthPubkey(wallet: Wallet): string {
 /// Here we want to upload the p2p contract and add the fee contract
 async function main() {
   // Getting a handler for the current address
-  let handler = new Address(env['mnemonics'][0]);
-  let contract = handler.getContract(
-    'terra1y3rchnxa90htrwmkn40sasp75gzffrpgx7p5u8ew6rayxjlhyz5ql8vrj3'
+  const handler = new Address(env['mnemonics'][0]);
+  const contract = handler.getContract(
+    'terra1ykdh99wjdhrtrjhrqawa2jfhutcdhwthvh0np0tkp43akzkr0nzseyqc6d'
   );
 
-  let response = await contract.execute.set_owner({
-    owner: 'terra1y3rchnxa90htrwmkn40sasp75gzffrpgx7p5u8ew6rayxjlhyz5ql8vrj3'
+  const response = await contract.execute.set_fee_price({
+    price: '400000'
   });
 
   console.log(response);
 }
 
 main()
-  .then(() => {})
-  .catch((err) => {
-    console.log(err);
-  });

@@ -2,15 +2,37 @@
 use anyhow::Result;
 use cosmwasm_std::{entry_point, Binary, Deps, DepsMut, Env, MessageInfo, Response};
 
-use cw721_metadata_onchain::Metadata;
-
 use minter_export::contract::{
     execute as minter_execute, instantiate as minter_instantiate, query as minter_query,
 };
 use minter_export::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
-
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 // This is a simple type to let us handle empty extensions
 pub type Extension = Option<Metadata>;
+
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug, Default)]
+pub struct Trait {
+    pub display_type: Option<String>,
+    pub trait_type: String,
+    pub value: String,
+}
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug, Default)]
+pub struct Metadata {
+    pub image: String,
+    pub image_data: Option<String>,
+    pub external_url: String,
+    pub description: String,
+    pub name: String,
+    pub attributes: Vec<Trait>,
+    pub background_color: Option<String>,
+    pub animation_url: Option<String>,
+    pub youtube_url: Option<String>,
+    // These owners can modify only some part of the NFT metadata
+    pub metadata_owner: Option<String>,
+    // This is useless in this contract and only used in the registrar for subdomain rights
+    pub subdomain_owner: Option<String>,
+}
 
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn instantiate(
@@ -52,7 +74,7 @@ pub mod tests {
             fee_price: Uint128::from(456u128),
             project_price: Uint128::from(0u128),
             project_treasury: "meonly".to_string(),
-            minter: "Atxyc0QMQkWOR0WfxpDKIhPpQInx34G9DtM7EWUHTWoj".to_string(),
+            minter: "AjBui2DTkLVKo2p5uCXf68SbHzSDoRDESKNtsr3+vtJI".to_string(),
         };
         let info = mock_info("creator", &[]);
         let env = mock_env();
@@ -163,7 +185,7 @@ pub mod tests {
 
         // 1. We initialized the contract with the nft address
         let nft_contract =
-            "terra1sf2fftvjt4z75g4rshngdxn5fr6qsccl78fgsz52fefwemxzvmaqptdfnp".to_string();
+            "terra14dcwvg4zplrc28g5q3802n2mmnp3fsp2yh7mn7gkxssnrjqp4ycq676kqf".to_string();
         execute(
             deps.as_mut(),
             env.clone(),
@@ -174,23 +196,13 @@ pub mod tests {
         )
         .unwrap();
 
-        let mint_msg: MintMsg<Extension> =  MintMsg{
-            token_id: "35".to_string(),
-            owner: "terra15h6ndxy6zyfn6l3cjvkyj5qa9hhe005wcy9z0p".to_string(),
-            token_uri: Some("ipfs://QmRdybiU1cduXZoc5saVxxveUiKgwJmkj8dAiozAcdsGfB".to_string()),
-            extension: Some(Metadata{
-                image: Some("ipfs://QmRqqJkpRRthx8TU3u9fLUos7evC8Aurrgayum4HosoxNJ".to_string()),
-                image_data: None,
-                external_url: None,
-                description: Some("Alas, the fuel that powers the ever-functioning intooorn brain. Without this, we as interns are lost, since this is the reward we work towards every single day. This delicious intern lunch is proof that you are indeed a proud supporter of the intooorns and we as a whole, thank you for your support. So please, lay back, relax and enjoy your ramen.".to_string()),
-                name: Some("RameNFT".to_string()),
-                attributes: None,
-                background_color: None,
-                animation_url: None,
-                youtube_url: None
-            })
+        let mint_msg: MintMsg<Extension> = MintMsg {
+            token_id: "test".to_string(),
+            owner: "terra1dcegyrekltswvyy0xy69ydgxn9x8x32zdtapd8".to_string(),
+            token_uri: Some("no_uri".to_string()),
+            extension: None,
         };
-        let signature = "jt5iZxgHFg1a0KgI6te3/V2Pz7clGCXGJ1iNqiJG2tsq/jr0HsK7wU3u3UDSErTaAlrfrsT+a5W4F32BJda6Yg==";
+        let signature = "4cDdgx6kJeCLh53RXia+LN8ULujqfmiqM0CGBlBnDUhiht4bqmwM9N0ZbygDIDwDZQLnrXv/DzaqGkEYRqv41Q==";
         execute(
             deps.as_mut(),
             env.clone(),
@@ -218,6 +230,6 @@ pub mod tests {
                 signature: signature.to_string(),
             },
         )
-        .unwrap();
+        .unwrap_err();
     }
 }

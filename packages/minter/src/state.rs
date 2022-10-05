@@ -1,8 +1,8 @@
+use crate::error::ContractError;
+use cosmwasm_std::{Addr, Deps, Uint128};
+use cw_storage_plus::Item;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use cosmwasm_std::{Addr, Uint128, Deps};
-use cw_storage_plus::{Item};
-use crate::error::ContractError;
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
 #[serde(rename_all = "snake_case")]

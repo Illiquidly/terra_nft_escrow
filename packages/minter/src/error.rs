@@ -13,12 +13,11 @@ pub enum ContractError {
     WrongNft {},
 
     #[error("Contract Not Initialized")]
-    ContractNotInitialized{},
+    ContractNotInitialized {},
 
     #[error("Fee not paid correctly, required: {required:?}uust, provided {provided:?}uluna")]
     FeeNotPaidCorrectly { required: u128, provided: u128 },
 
     #[error("Fee not paid")]
     FeeNotPaid {},
-
 }

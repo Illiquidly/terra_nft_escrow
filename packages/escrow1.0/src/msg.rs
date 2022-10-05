@@ -1,7 +1,25 @@
 use crate::state::TokenOwner;
-use cosmwasm_std::{Binary, StdError, StdResult, Timestamp};
+use cosmwasm_std::{to_binary, Binary, Coin, CosmosMsg, StdError, StdResult, Timestamp, WasmMsg};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+
+pub fn into_binary<M: Serialize>(msg: M) -> StdResult<Binary> {
+    to_binary(&msg)
+}
+
+pub fn into_cosmos_msg<M: Serialize, T: Into<String>>(
+    message: M,
+    contract_addr: T,
+    funds: Option<Vec<Coin>>,
+) -> StdResult<CosmosMsg> {
+    let msg = into_binary(message)?;
+    let execute = WasmMsg::Execute {
+        contract_addr: contract_addr.into(),
+        msg,
+        funds: funds.unwrap_or_default(),
+    };
+    Ok(execute.into())
+}
 
 #[derive(Serialize, Deserialize, JsonSchema, Debug, Clone, PartialEq)]
 pub struct MigrateMsg {}
@@ -55,6 +73,9 @@ pub enum ExecuteMsg {
         sender: String,
         token_id: String,
         msg: Binary,
+    },
+    Withdraw {
+        token_id: String,
     },
     SetOwner {
         owner: String,

@@ -7,13 +7,15 @@ use cosmwasm_std::{
 use cw_storage_plus::Bound;
 
 use escrow_export_classic::msg::{
-    to_token_info, ContractInfoResponse, ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg,
-    ReceiveMsg, TokenInfo, TokenInfoResponse,
+    into_cosmos_msg, to_token_info, ContractInfoResponse, ExecuteMsg, InstantiateMsg, MigrateMsg,
+    QueryMsg, ReceiveMsg, TokenInfo, TokenInfoResponse,
 };
 use escrow_export_classic::state::{ContractInfo, TokenOwner};
 
 use crate::error::ContractError;
 use crate::state::{is_owner, DepositNft, CONTRACT_INFO};
+
+use cw721::Cw721ExecuteMsg;
 
 /**
  * This package is used to lock NFTs
@@ -53,9 +55,9 @@ pub fn execute(deps: DepsMut, env: Env, info: MessageInfo, msg: ExecuteMsg) -> R
             msg,
         } => execute_receive_nft(deps, env, info, sender, token_id, msg),
 
-        ExecuteMsg::SetOwner { owner } => set_owner(deps, env, info, owner),
+        ExecuteMsg::Withdraw { token_id } => execute_withdraw(deps, token_id),
 
-        ExecuteMsg::Withdraw { .. } => Err(anyhow!(ContractError::Unauthorized {})),
+        ExecuteMsg::SetOwner { owner } => set_owner(deps, env, info, owner),
     }
 }
 
@@ -238,6 +240,32 @@ pub fn execute_receive_nft(
                 .add_attribute("depositor", sender))
         }
     }
+}
+
+/**
+ * Returns the depositor of a specific token_id
+ * */
+pub fn execute_withdraw(deps: DepsMut, token_id: String) -> Result<Response> {
+    let depositor = DepositNft::default()
+        .nfts
+        .load(deps.storage, &token_id)?
+        .owner;
+    let contract_info = CONTRACT_INFO.load(deps.storage)?;
+
+    DepositNft::default().nfts.remove(deps.storage, &token_id)?;
+
+    let transfer_msg = Cw721ExecuteMsg::TransferNft {
+        recipient: depositor.to_string(),
+        token_id,
+    };
+
+    Ok(Response::new()
+        .add_message(into_cosmos_msg(
+            transfer_msg,
+            contract_info.nft_address,
+            None,
+        )?)
+        .add_attribute("action", "withdraw_nft"))
 }
 
 #[cfg(test)]
