@@ -14,7 +14,7 @@
         "contract2": "terra1c649ctpkwqa9h65g6xmplrncc55d5nzqgz30zhtkcysedkd63zcq02uhs8",
         "escrow_contract": "terra18f3kvyggdqngyprtzsrx6ee4c3akusl7rgrw3c",
         "minter_contract": "terra1mcjgaclqg75jwfqr9cxkh7e77zv3k8fg7h3hp84fe8epj2ku5vws0krrmz",
-        "project_treasury": "terra16g4etmr28jd2a3kp29xalpzaprd38llfynjv9n",
+        "project_treasury": "terra17xqygpamm57q75plm59fzt5zc9au4awdxuzy2dpuke5tgpgjmx7s6uy7kn",
         "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     },
     "terra103z9cnqm8psy0nyxqtugg6m7xnwvlkqdzm4s4k": {
@@ -87,6 +87,15 @@
         "escrow_contract": "terra1j4a673xagr8e237h0yj450zp2gcvtsrhc2xf7e",
         "minter_contract": "terra1cpr0rmsa49llrynvnuwxuhvmyfhmvvz4ndwvwg3xvuueur05l4ls90lpvz",
         "project_treasury": "terra1765muytnhdzk6p6plghpu58xvy7pdrahxks33w9afx7t7adwmhnqrpey2z",
+        "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
+    },
+    "terra1kzk5r3z58urx2ryxaan6ww2gezdu6mndar2ghv": {
+        "name": "Lunar Boots",
+        "contract1": "terra1kzk5r3z58urx2ryxaan6ww2gezdu6mndar2ghv",
+        "contract2": "terra1t5934pztkw2j983azhsgkvkvfp2vgfpgvzrpy58h88krr4uvph6sevnsdm",
+        "escrow_contract": "terra1y00n4qkxxcqxwcs8s0l5jvmdky8w363r48alxy",
+        "minter_contract": "terra1jpju584v34m58v2hkth643swwsnvf3775x0y2hpxunf5d0hj70uqdmsjm4",
+        "project_treasury": "terra1x5yjtp09uqrpdjun8qgtkffv6290y9cnnufv38",
         "treasury": "terra1yttw08pl3y3txd3jls4pmw5n9pesggcnta3u87ak2tddk97satasvdul7n"
     }
 }
